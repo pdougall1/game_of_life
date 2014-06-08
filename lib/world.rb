@@ -45,6 +45,8 @@ class World
 		cells = selected_cells + resurected_cells
 		new_world = World.new 
 		new_world.seed_with *cells
+		puts "NEW VALUES : #{new_world.live_cells.values}"
+		new_world
 	end
 
 end
