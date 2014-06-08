@@ -71,7 +71,6 @@ describe World do
 				_cells = [cell_1, cell_2, cell_9]
 				_world = world.seed_with(*_cells).tick
 				new_cells = _world.live_cells.values.select { |cell| !_cells.include? cell }
-				puts new_cells
 				expected_new_cell = Cell.new [2,2]
 				expect(new_cells.include? expected_new_cell).to eq(true)
 			end

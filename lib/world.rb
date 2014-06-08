@@ -25,25 +25,26 @@ class World
 		end
 	end
 
-	def tick
-		still_alive_cells = live_cells.select do |coords, cell|
+	def selected_cells
+		live_cells.values.select do |cell|
 			(cell.neighbors & live_cells.values).count.between?(2, 3)
 		end
+	end
 
-		resurected = []
-		live_cells.values.each do |cell|
+	def resurected_cells
+		live_cells.values.reduce([]) do |acc, cell|
 			dead_cells = cell.neighbors.select { |c| is_dead? c }
 			dead_cells.each do |d_cell|
-				resurected << d_cell if live_neighbors(d_cell).count == 3
+				acc << d_cell if live_neighbors(d_cell).count == 3
 			end
-		end
+			acc
+		end.uniq
+	end
 
-		resurected.uniq.each do |res|
-			still_alive_cells[res.coordinates] = res
-		end
-
+	def tick
+		cells = selected_cells + resurected_cells
 		new_world = World.new 
-		new_world.seed_with *still_alive_cells.values
+		new_world.seed_with *cells
 	end
 
 end
