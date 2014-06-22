@@ -1,14 +1,14 @@
 
 class World
 
-	def seed_with *cells
-		@live_cells = Hash.new
-		cells.each { |cell| @live_cells[cell.coordinates] = cell }
-		self
-	end
+	attr_reader :live_cells
 
-	def live_cells
-		@live_cells
+	def initialize *cells
+		@live_cells = cells.reduce(Hash.new) do |_cells, cell|
+			_cells[cell.coordinates] = cell
+			_cells
+		end
+		self		
 	end
 
 	def is_alive? cell
@@ -42,11 +42,9 @@ class World
 	end
 
 	def tick
-		cells = selected_cells + resurected_cells
-		new_world = World.new 
-		new_world.seed_with *cells
-		puts "NEW VALUES : #{new_world.live_cells.values}"
-		new_world
+		# tick just needs to return a new instance of World with the evolved set of cells
+		# this feels like some sort of interesting recursion
+		World.new *(selected_cells + resurected_cells)
 	end
 
 end

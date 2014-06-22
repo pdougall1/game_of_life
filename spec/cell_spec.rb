@@ -6,16 +6,12 @@ describe Cell do
 
 	context 'when creating a cell' do
 
-		it 'should create a new cell' do
-			expect(subject.class).to eq(Cell)
-		end
-
 		it 'should have neighbors' do
-			expect(subject.neighbors.is_a? Enumerable).to eq(true)
+			expect(subject.neighbors).to be_kind_of(Enumerable)
 		end
 
-		it 'should have coordinates' do
-			expect(subject.coordinates.class).to eq(Array)
+		it 'should have coordinates set of two' do
+			expect(subject.coordinates).to eq([3, 3]) 
 		end
 
 	end
